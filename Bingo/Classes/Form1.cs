@@ -21,9 +21,8 @@ namespace Bingo.Classes
         private const int BINGOCARDSIZE = 7;
         private const int NUMBERSPERCOLUMN = 15;
         private const int MAXBINGONUMBER = 75;
-        int countOfCalledNumbers;
-        char nextCalledLetter;
-        int nextCalledNumber;
+
+        private int currentPlayer = 1;
         
         //global objects
         private Button[,] newButton = new Button[BINGOCARDSIZE, BINGOCARDSIZE];
@@ -82,7 +81,14 @@ namespace Bingo.Classes
                     newButton[row, col].Font = new Font("Arial", 24, FontStyle.Bold);
                     newButton[row, col].Text = "h";
 
-                    newButton[row, col].Enabled = true;
+                    if(row == 6)
+                    {
+                        newButton[row, col].Enabled = true;
+                    }
+                    else
+                    {
+                        newButton[row, col].Enabled = false;
+                    }
                     newButton[row, col].Name = "btn" + row.ToString() + col.ToString();
                     
                     // Associates the same event handler with each of the buttons generated
@@ -159,6 +165,7 @@ namespace Bingo.Classes
 
         private void Button_Click(object sender, EventArgs e)  //event handler when a bingo card is clicked
         {
+            /*
             int selectedNumber;  // number clicked on 
             int rowID = convertCharToInt(((Button)sender).Name[3]);
             int colID = convertCharToInt(((Button)sender).Name[4]);
@@ -188,6 +195,7 @@ namespace Bingo.Classes
              {
                  MessageBox.Show("Called number does not match the one in the box you selected." + "Try again!", "Numbers Do Not Match");
              } // end outer if
+             */
         } // end button clickhandler 
 
         public int convertCharToInt(char c)  //converts a character to an int
@@ -202,16 +210,23 @@ namespace Bingo.Classes
 
         private void btnYes_Click(object sender, EventArgs e)
         {
-            if (String.IsNullOrEmpty(txtName.Text)) //name input validation
+            if (((String.IsNullOrEmpty(txtPlayer1Name.Text) && String.IsNullOrEmpty(txtPlayer2Name.Text))))  //name input validation
             {
-                MessageBox.Show("Name cannot be blank. Re-enter.", "Entry Error");
-                txtName.Focus();
+                MessageBox.Show("Both players must enter names to continue.", "No Names Found");
+                txtPlayer1Name.Focus();
+            }
+            else if (String.IsNullOrEmpty(txtPlayer1Name.Text))
+            {
+                MessageBox.Show("Player 1 must enter a name to continue.", "Player 1 Name Not Found");
+                txtPlayer1Name.Focus();
+            }
+            else if (String.IsNullOrEmpty(txtPlayer2Name.Text))
+            {
+                MessageBox.Show("Player 2 must enter a name to continue.", "Player 2 Name Not Found");
+                txtPlayer2Name.Focus();
             }
             else
             {
-                lblInstructions.Visible = true;     //make everything visible, create cards, and initiate game
-                txtCardCalled.Visible = true;
-                btnDontHave.Visible = true;
                 pnlCard.Visible = true;
                 createCard();
                 btnYes.Enabled = false;
@@ -227,18 +242,7 @@ namespace Bingo.Classes
         }
         void playTheGame()
         {
-            if (countOfCalledNumbers < MAXBINGONUMBER) // validates that not all cards were called
-            {
-                countOfCalledNumbers++;
-                nextCalledNumber = RNGType.getNextUniqueRandomValue(1, MAXBINGONUMBER);
-                nextCalledLetter = bingoLetters[(nextCalledNumber - 1) / NUMBERSPERCOLUMN];
-                txtCardCalled.Text = nextCalledLetter + " " + nextCalledNumber.ToString();      //generates letter and number in textbox
-            }
-            else //in this case all numbers were called
-            {
-                MessageBox.Show("All bingo numbers called.  \nYou must have missed one or more.  \nGame over.", "All Numbers Used");
-                Close();
-            }   // end if
-        } // end playTheGame     
+           
+        } // end playTheGame  
     }
 }

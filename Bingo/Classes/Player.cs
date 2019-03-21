@@ -11,11 +11,19 @@ namespace Bingo.Classes
 {
     public class Player
     {
-        String name;
+        String playerName;
+        int playerID;
+
         //sets player name
         public Player(String name)
         {
-            this.name = name;
+            this.playerName = name;
+        }
+
+        public Player(String name, int id)
+        {
+            this.playerName = name;
+            this.playerID = id;
         }
     }
 }
