@@ -165,7 +165,7 @@ namespace Bingo.Classes
 
         private void Button_Click(object sender, EventArgs e)  //event handler when a bingo card is clicked
         {
-            /*
+            
             int selectedNumber;  // number clicked on 
             int rowID = convertCharToInt(((Button)sender).Name[3]);
             int colID = convertCharToInt(((Button)sender).Name[4]);
@@ -175,27 +175,58 @@ namespace Bingo.Classes
             // Double check that clicked on button value matches called value            
             selectedNumber = Convert.ToInt32(newButton[rowID, colID].Text);  //cast button text to an int so it can be compared to nextCalledNumber                  
             
-            if (selectedNumber == nextCalledNumber)
+            if (currentPlayer == 1)
              {
-                newButton[rowID, colID].BackColor = System.Drawing.Color.Orange;
+                // implement code for when btn is clicked, the ascending btn is enabled 
+                // while clicked btn is disabled for both player clicks
+                newButton[rowID, colID].BackColor = System.Drawing.Color.Red;
                 newButton[rowID, colID].Enabled = false;                                
-                board.markCell(rowID, colID);   //mark cell in internal 2d array
-                
-                //Globals.selectedNumbersListObj.setUsedNumber(selectedNumber);
+                board.markCell(rowID, colID);   //mark cell in internal 2d array    
+                if(rowID == 0)
+                {
+                    Console.WriteLine(colID + " has reached the top of the board.");
+                }
+                else
+                {
+                    newButton[rowID - 1, colID].Enabled = true;
+                }
 
                 // Check for winner
                 if (board.checkBingo() == true)
                 {
-                    MessageBox.Show("You win! Congrats!");
+                    MessageBox.Show("Player 1 Wins! Congrats!");
                     this.Close();
                 }                            
                  playTheGame();               
+            }
+            else if(currentPlayer == 2)
+            {
+                newButton[rowID, colID].BackColor = System.Drawing.Color.Yellow;
+                newButton[rowID, colID].Enabled = false;
+                board.markCell(rowID, colID);   //mark cell in internal 2d array
+
+                if (rowID == 0)
+                {
+                    Console.WriteLine(colID + " has reached the top of the board.");
+                }
+                else
+                {
+                    newButton[rowID - 1, colID].Enabled = true;
+                }
+
+                // Check for winner
+                if (board.checkBingo() == true)
+                {
+                    MessageBox.Show("Player 2 Wins! Congrats!");
+                    this.Close();
+                }
+                playTheGame();
             }
              else
              {
                  MessageBox.Show("Called number does not match the one in the box you selected." + "Try again!", "Numbers Do Not Match");
              } // end outer if
-             */
+             
         } // end button clickhandler 
 
         public int convertCharToInt(char c)  //converts a character to an int
@@ -234,15 +265,19 @@ namespace Bingo.Classes
             }
         }
 
-       
-
-        private void btnDontHave_Click(object sender, EventArgs e)
-        {
-            playTheGame();  //continue to call numbers if dont have button is clicked
-        }
         void playTheGame()
         {
-           
+             while(currentPlayer == 1)
+            {
+                // player 1 makes move
+                currentPlayer = 2;
+            } 
+            
+             while(currentPlayer == 2)
+            {
+                // player 2 makes move
+                currentPlayer = 1;
+            }
         } // end playTheGame  
     }
 }
