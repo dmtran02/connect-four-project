@@ -37,6 +37,7 @@
             this.pnlCard = new System.Windows.Forms.Panel();
             this.lblPlayer2Name = new System.Windows.Forms.Label();
             this.txtPlayer2Name = new System.Windows.Forms.TextBox();
+            this.lblCurrentPlayer = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblWelcome
@@ -62,7 +63,7 @@
             // txtPlayer1Name
             // 
             this.txtPlayer1Name.Location = new System.Drawing.Point(260, 56);
-            this.txtPlayer1Name.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtPlayer1Name.Margin = new System.Windows.Forms.Padding(4);
             this.txtPlayer1Name.Name = "txtPlayer1Name";
             this.txtPlayer1Name.Size = new System.Drawing.Size(238, 31);
             this.txtPlayer1Name.TabIndex = 2;
@@ -80,7 +81,7 @@
             // btnYes
             // 
             this.btnYes.Location = new System.Drawing.Point(390, 119);
-            this.btnYes.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnYes.Margin = new System.Windows.Forms.Padding(4);
             this.btnYes.Name = "btnYes";
             this.btnYes.Size = new System.Drawing.Size(174, 54);
             this.btnYes.TabIndex = 4;
@@ -91,7 +92,7 @@
             // btnExit
             // 
             this.btnExit.Location = new System.Drawing.Point(610, 119);
-            this.btnExit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnExit.Margin = new System.Windows.Forms.Padding(4);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(174, 54);
             this.btnExit.TabIndex = 5;
@@ -102,7 +103,7 @@
             // pnlCard
             // 
             this.pnlCard.Location = new System.Drawing.Point(125, 204);
-            this.pnlCard.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlCard.Margin = new System.Windows.Forms.Padding(4);
             this.pnlCard.Name = "pnlCard";
             this.pnlCard.Size = new System.Drawing.Size(1530, 1719);
             this.pnlCard.TabIndex = 9;
@@ -120,16 +121,26 @@
             // txtPlayer2Name
             // 
             this.txtPlayer2Name.Location = new System.Drawing.Point(656, 54);
-            this.txtPlayer2Name.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtPlayer2Name.Margin = new System.Windows.Forms.Padding(4);
             this.txtPlayer2Name.Name = "txtPlayer2Name";
             this.txtPlayer2Name.Size = new System.Drawing.Size(238, 31);
             this.txtPlayer2Name.TabIndex = 11;
+            // 
+            // lblCurrentPlayer
+            // 
+            this.lblCurrentPlayer.AutoSize = true;
+            this.lblCurrentPlayer.Location = new System.Drawing.Point(999, 119);
+            this.lblCurrentPlayer.Name = "lblCurrentPlayer";
+            this.lblCurrentPlayer.Size = new System.Drawing.Size(150, 25);
+            this.lblCurrentPlayer.TabIndex = 12;
+            this.lblCurrentPlayer.Text = "Current Player";
             // 
             // frmBingo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1284, 781);
+            this.Controls.Add(this.lblCurrentPlayer);
             this.Controls.Add(this.txtPlayer2Name);
             this.Controls.Add(this.lblPlayer2Name);
             this.Controls.Add(this.pnlCard);
@@ -139,7 +150,7 @@
             this.Controls.Add(this.txtPlayer1Name);
             this.Controls.Add(this.lblPlayer1Name);
             this.Controls.Add(this.lblWelcome);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmBingo";
             this.Text = "Form1";
             this.ResumeLayout(false);
@@ -158,6 +169,7 @@
         private System.Windows.Forms.Panel pnlCard;
         private System.Windows.Forms.Label lblPlayer2Name;
         private System.Windows.Forms.TextBox txtPlayer2Name;
+        private System.Windows.Forms.Label lblCurrentPlayer;
     }
 }
 

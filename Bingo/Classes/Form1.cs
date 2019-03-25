@@ -18,16 +18,14 @@ namespace Bingo.Classes
     public partial class frmBingo : Form
     {
         //global variables to be used
-        private const int BINGOCARDSIZE = 7;
+        private const int CARDSIZE = 7;
         private const int NUMBERSPERCOLUMN = 15;
         private const int MAXBINGONUMBER = 75;
 
         private int currentPlayer = 1;
         
         //global objects
-        private Button[,] newButton = new Button[BINGOCARDSIZE, BINGOCARDSIZE];
-        RNGType RNGType = new RNGType();
-        char[] bingoLetters = { 'B', 'I', 'N', 'G', 'O' };
+        private Button[,] newButton = new Button[CARDSIZE, CARDSIZE];
         InternalBoard board = new InternalBoard();
 
         // Total width and height of a card cell
@@ -60,18 +58,18 @@ namespace Bingo.Classes
             y = ycardUpperLeft;
 
             // Draw top line for card
-            drawHorizBar(x, y, BINGOCARDSIZE);
+            drawHorizBar(x, y, CARDSIZE);
             y = y + barWidth;
 
             // The board is treated like a 5x5 array
             drawVertBar(x, y);
             Globals.selectedNumbersListObj.reset(); //ensure clear array, recommended by professor
              
-            for (int row = 0; row < BINGOCARDSIZE-1; row++)
+            for (int row = 0; row < CARDSIZE-1; row++)
             {
                 loc.Y = topMargin + row * (size.Height + padding);
                 int extraLeftPadding = 50;
-                for (int col = 0; col < BINGOCARDSIZE; col++)
+                for (int col = 0; col < CARDSIZE; col++)
                 {
                     newButton[row, col] = new Button();
                     newButton[row, col].Location = new Point(extraLeftPadding + col * (size.Width + padding) + barWidth, loc.Y);
@@ -108,7 +106,7 @@ namespace Bingo.Classes
                 // Draw bottom square delimiter if square complete
                 x = xcardUpperLeft - 20;
                 y = y + cardCellHeight + padding;
-                drawHorizBar(x + 25, y - 10, BINGOCARDSIZE - 10);
+                drawHorizBar(x + 25, y - 10, CARDSIZE - 10);
             } // end for row
 
             // Draw column indices at bottom of card
@@ -140,7 +138,7 @@ namespace Bingo.Classes
             lblHorizBar.BackColor = System.Drawing.SystemColors.ControlText;
             lblHorizBar.Location = new System.Drawing.Point(currentx, y);
             lblHorizBar.Name = "lblHorizBar";
-            lblHorizBar.Size = new System.Drawing.Size((cardCellWidth + padding - 1) * BINGOCARDSIZE, barWidth);
+            lblHorizBar.Size = new System.Drawing.Size((cardCellWidth + padding - 1) * CARDSIZE, barWidth);
             lblHorizBar.TabIndex = 20;
             pnlCard.Controls.Add(lblHorizBar);
             lblHorizBar.Visible = true;
@@ -155,7 +153,7 @@ namespace Bingo.Classes
             lblVertBar.BackColor = System.Drawing.SystemColors.ControlText;
             lblVertBar.Location = new System.Drawing.Point(x, y);
             lblVertBar.Name = "lblVertBar" + x.ToString();
-            lblVertBar.Size = new System.Drawing.Size(barWidth, (cardCellHeight + padding - 1) * BINGOCARDSIZE);
+            lblVertBar.Size = new System.Drawing.Size(barWidth, (cardCellHeight + padding - 1) * CARDSIZE);
             lblVertBar.TabIndex = 19;
             pnlCard.Controls.Add(lblVertBar);
             lblVertBar.Visible = true;
@@ -190,7 +188,7 @@ namespace Bingo.Classes
                 // Check for winner
                 if (board.checkConnectFour() == true)
                 {
-                    MessageBox.Show("Player 1 Wins! Congrats!");
+                    MessageBox.Show("Player 1 Wins! Congrats!", "You are a Winner!");
                     this.Close();
                 }                            
                  playTheGame();               
@@ -213,7 +211,7 @@ namespace Bingo.Classes
                 // Check for winner
                 if (board.checkConnectFour() == true)
                 {
-                    MessageBox.Show("Player 2 Wins! Congrats!");
+                    MessageBox.Show("Player 2 Wins! Congrats!", "You are a Winner!");
                     this.Close();
                 }
                 playTheGame();
@@ -256,7 +254,8 @@ namespace Bingo.Classes
             {
                 pnlCard.Visible = true;
                 createCard();
-                btnYes.Enabled = false;             
+                btnYes.Enabled = false;
+                lblCurrentPlayer.Text = "Player 1 Move (RED)";
             }
         }
 
@@ -265,10 +264,12 @@ namespace Bingo.Classes
             if(currentPlayer == 1)
             {
                 currentPlayer = 2;
+                lblCurrentPlayer.Text = "Player 2 Move (YELLOW)";
             }
             else if(currentPlayer == 2)
             {
                 currentPlayer = 1;
+                lblCurrentPlayer.Text = "Player 1 Move (RED)";
             }
             /*
              while(currentPlayer == 1)
