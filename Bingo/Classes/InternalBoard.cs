@@ -62,7 +62,7 @@ namespace Bingo.Classes
                     }
                 }
             }
-
+            //
             // player 1 vertical check
             for(int i = 0; i< getWidth() - 3; i++)
             {
