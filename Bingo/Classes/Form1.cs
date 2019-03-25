@@ -79,9 +79,9 @@ namespace Bingo.Classes
                     newButton[row, col].Font = new Font("Arial", 24, FontStyle.Bold);
 
                     newButton[row, col].Font = new Font("Arial", 24, FontStyle.Bold);
-                    newButton[row, col].Text = "h";
+                    newButton[row, col].Text = ":)";
 
-                    if(row == 6)
+                    if(row == 5)
                     {
                         newButton[row, col].Enabled = true;
                     }
@@ -166,14 +166,10 @@ namespace Bingo.Classes
         private void Button_Click(object sender, EventArgs e)  //event handler when a bingo card is clicked
         {
             
-            int selectedNumber;  // number clicked on 
             int rowID = convertCharToInt(((Button)sender).Name[3]);
             int colID = convertCharToInt(((Button)sender).Name[4]);
             MessageBox.Show("Cell[" + rowID + "," + colID + "] has been selected!");
-            int cellID = rowID * 3 + colID;
-
-            // Double check that clicked on button value matches called value            
-            selectedNumber = Convert.ToInt32(newButton[rowID, colID].Text);  //cast button text to an int so it can be compared to nextCalledNumber                  
+            int cellID = rowID * 3 + colID;            
             
             if (currentPlayer == 1)
              {
@@ -181,7 +177,7 @@ namespace Bingo.Classes
                 // while clicked btn is disabled for both player clicks
                 newButton[rowID, colID].BackColor = System.Drawing.Color.Red;
                 newButton[rowID, colID].Enabled = false;                                
-                board.markCell(rowID, colID);   //mark cell in internal 2d array    
+                board.markCell(rowID, colID, currentPlayer);   //mark cell in internal 2d array    
                 if(rowID == 0)
                 {
                     Console.WriteLine(colID + " has reached the top of the board.");
@@ -192,7 +188,7 @@ namespace Bingo.Classes
                 }
 
                 // Check for winner
-                if (board.checkBingo() == true)
+                if (board.checkConnectFour() == true)
                 {
                     MessageBox.Show("Player 1 Wins! Congrats!");
                     this.Close();
@@ -203,7 +199,7 @@ namespace Bingo.Classes
             {
                 newButton[rowID, colID].BackColor = System.Drawing.Color.Yellow;
                 newButton[rowID, colID].Enabled = false;
-                board.markCell(rowID, colID);   //mark cell in internal 2d array
+                board.markCell(rowID, colID, currentPlayer);   //mark cell in internal 2d array
 
                 if (rowID == 0)
                 {
@@ -215,7 +211,7 @@ namespace Bingo.Classes
                 }
 
                 // Check for winner
-                if (board.checkBingo() == true)
+                if (board.checkConnectFour() == true)
                 {
                     MessageBox.Show("Player 2 Wins! Congrats!");
                     this.Close();
@@ -260,13 +256,21 @@ namespace Bingo.Classes
             {
                 pnlCard.Visible = true;
                 createCard();
-                btnYes.Enabled = false;
-                playTheGame();               
+                btnYes.Enabled = false;             
             }
         }
 
         void playTheGame()
         {
+            if(currentPlayer == 1)
+            {
+                currentPlayer = 2;
+            }
+            else if(currentPlayer == 2)
+            {
+                currentPlayer = 1;
+            }
+            /*
              while(currentPlayer == 1)
             {
                 // player 1 makes move
@@ -278,6 +282,7 @@ namespace Bingo.Classes
                 // player 2 makes move
                 currentPlayer = 1;
             }
+            */
         } // end playTheGame  
     }
 }
