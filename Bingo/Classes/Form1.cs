@@ -47,7 +47,7 @@ namespace Bingo.Classes
             public frmBingo()
         {
             InitializeComponent();
-            this.Height = 825;
+            this.Height = 800;
             this.Width = 900;
         }
 
@@ -165,7 +165,7 @@ namespace Bingo.Classes
             lblVertBar.BackColor = System.Drawing.SystemColors.ControlText;
             lblVertBar.Location = new System.Drawing.Point(x, y);
             lblVertBar.Name = "lblVertBar" + x.ToString();
-            lblVertBar.Size = new System.Drawing.Size(barWidth, (cardCellHeight + padding - 1) * CARDSIZE);
+            lblVertBar.Size = new System.Drawing.Size(barWidth, (cardCellHeight + padding - 1) * 6);
             lblVertBar.TabIndex = 19;
             pnlCard.Controls.Add(lblVertBar);
             lblVertBar.Visible = true;
