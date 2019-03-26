@@ -18,6 +18,7 @@ namespace Bingo.Classes
     {
         //global variables to be used
         private const int CARDSIZE = 7;
+        private const int clickButtonMax = 42;
 
         private int currentPlayer = 1;
         
@@ -196,9 +197,9 @@ namespace Bingo.Classes
                 newButton[rowID, colID].Enabled = false;                                
                 board.markCell(rowID, colID, currentPlayer);   //mark cell in internal 2d array   
                 counter = 0;
-                lblCurrentPlayer.Text = "Player 2 (YELLOW)";
+                lblCurrentPlayer.Text = "Player " + Player2.getPlayerID().ToString() + " Move (" + Player2.getPlayerColor().ToString() + ")";
                 // newButton[rowID, colID].Text = "1";
-                if(rowID == 0)
+                if (rowID == 0)
                 {
                     Console.WriteLine(colID + " has reached the top of the board.");
                 }
@@ -221,7 +222,7 @@ namespace Bingo.Classes
                 board.markCell(rowID, colID, currentPlayer);   //mark cell in internal 2d array
                 counter = 0;
                 pauseCounter = 0;
-                lblCurrentPlayer.Text = "Player 1 (RED)";
+                lblCurrentPlayer.Text = "Player " + Player1.getPlayerID().ToString() + " Move (" + Player1.getPlayerColor().ToString() + ")";
                 // newButton[rowID, colID].Text = "2";
 
                 if (rowID == 0)
@@ -236,7 +237,7 @@ namespace Bingo.Classes
                 
                 
             }
-            if(buttonClickCounter == 42)
+            if(buttonClickCounter == clickButtonMax)
             {
                 MessageBox.Show("Uh oh... Both of you failed to win. Exiting game now!", "Tie Detected");
                 this.Close();
@@ -288,7 +289,7 @@ namespace Bingo.Classes
                 createCard();
                 btnYes.Enabled = false;
                 lblCurrentPlayer.Visible = true;
-                lblCurrentPlayer.Text = "Player 1 Move (RED)";
+                lblCurrentPlayer.Text = "Player " + Player1.getPlayerID().ToString() + " Move (" + Player1.getPlayerColor().ToString() + ")";
 
                 txtPlayer1Name.ReadOnly = true;
                 txtPlayer2Name.ReadOnly = true;
@@ -303,27 +304,14 @@ namespace Bingo.Classes
 
         void playTheGame()
         {
-            if(currentPlayer == 1)
+            if (currentPlayer == Player1.getPlayerID())
             {
-                currentPlayer = 2;
+                currentPlayer = Player2.getPlayerID();
             }
-            else if(currentPlayer == 2)
+            else if(currentPlayer == Player2.getPlayerID())
             {
-                currentPlayer = 1;
+                currentPlayer = Player1.getPlayerID();
             }
-            /*
-             while(currentPlayer == 1)
-            {
-                // player 1 makes move
-                currentPlayer = 2;
-            } 
-            
-             while(currentPlayer == 2)
-            {
-                // player 2 makes move
-                currentPlayer = 1;
-            }
-            */
         } // end playTheGame
         
         void timer_Tick(object sender, EventArgs e)
@@ -367,7 +355,7 @@ namespace Bingo.Classes
                 {
                     pause.Start();
                     //MessageBox.Show("working?");
-                    newButton[clickedRowID, clickedColID].Text = "1";
+                    newButton[clickedRowID, clickedColID].Text = Player1.getPlayerID().ToString();
                     t.Stop();
                 }
             }
@@ -409,7 +397,7 @@ namespace Bingo.Classes
                 if (counter == clickedRowID)
                 {
                     pause.Start();
-                    newButton[clickedRowID, clickedColID].Text = "2";
+                    newButton[clickedRowID, clickedColID].Text = Player2.getPlayerID().ToString();
                     //MessageBox.Show("working?");
                     t.Stop();
                 }
@@ -448,7 +436,7 @@ namespace Bingo.Classes
                     // Check for winner
                     if (board.checkConnectFour() == true)
                     {
-                        MessageBox.Show("Player 1 Wins! Congrats!", "You are a Winner!");
+                        MessageBox.Show(Player1.getPlayerName().ToString() + " (Player 1) Wins! Congrats!", "You are a Winner!");
                         this.Close();
                     }
                 }
@@ -459,7 +447,7 @@ namespace Bingo.Classes
                     // Check for winner
                     if (board.checkConnectFour() == true)
                     {
-                        MessageBox.Show("Player 2 Wins! Congrats!", "You are a Winner!");
+                        MessageBox.Show(Player2.getPlayerName().ToString() + " (Player 2) Wins! Congrats!", "You are a Winner!");
                         this.Close();
                     }
                 }
