@@ -10,7 +10,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WindowsFormsApplication1;
 
 //Tommy
 namespace Bingo.Classes
@@ -19,8 +18,6 @@ namespace Bingo.Classes
     {
         //global variables to be used
         private const int CARDSIZE = 7;
-        private const int NUMBERSPERCOLUMN = 15;
-        private const int MAXBINGONUMBER = 75;
 
         private int currentPlayer = 1;
         
@@ -37,14 +34,24 @@ namespace Bingo.Classes
         int xcardUpperLeft = 45;
         int ycardUpperLeft = 45;
         int padding = 20;
+
         int counter = 0;
         int pauseCounter = 0;
         int buttonClickCounter = 0;
 
+        int p1ID = 1;
+        int p2ID = 2;
+
+        string p1Color = "Red";
+        string p2Color = "Yellow";
+
         int clickedRowID = 0;
         int clickedColID = 0;
 
-            public frmBingo()
+        Player Player1 = new Player();
+        Player Player2 = new Player();
+
+        public frmBingo()
         {
             InitializeComponent();
             this.Height = 800;
@@ -73,7 +80,6 @@ namespace Bingo.Classes
 
             // The board is treated like a 5x5 array
             drawVertBar(x, y);
-            Globals.selectedNumbersListObj.reset(); //ensure clear array, recommended by professor
              
             for (int row = 0; row < CARDSIZE-1; row++)
             {
@@ -88,7 +94,7 @@ namespace Bingo.Classes
                     newButton[row, col].Font = new Font("Arial", 24, FontStyle.Bold);
 
                     newButton[row, col].Font = new Font("Arial", 24, FontStyle.Bold);
-                    newButton[row, col].Text = ":)";
+                    newButton[row, col].Text = "0";
 
                     if(row == 5)
                     {
@@ -181,7 +187,7 @@ namespace Bingo.Classes
             //MessageBox.Show("Cell[" + rowID + "," + colID + "] has been selected!");
             int cellID = rowID * 3 + colID;            
             
-            if (currentPlayer == 1)
+            if (currentPlayer == Player1.getPlayerID())
              {
                 clickedRowID = rowID;
                 clickedColID = colID;
@@ -191,6 +197,7 @@ namespace Bingo.Classes
                 board.markCell(rowID, colID, currentPlayer);   //mark cell in internal 2d array   
                 counter = 0;
                 lblCurrentPlayer.Text = "Player 2 (YELLOW)";
+                // newButton[rowID, colID].Text = "1";
                 if(rowID == 0)
                 {
                     Console.WriteLine(colID + " has reached the top of the board.");
@@ -205,17 +212,17 @@ namespace Bingo.Classes
                 pauseCounter = 0;
                               
             }
-            else if(currentPlayer == 2)
+            else if(currentPlayer == Player2.getPlayerID())
             {
                 clickedRowID = rowID;
                 clickedColID = colID;
                 t.Start();
-                //newButton[rowID, colID].BackColor = System.Drawing.Color.Yellow;
                 newButton[rowID, colID].Enabled = false;
                 board.markCell(rowID, colID, currentPlayer);   //mark cell in internal 2d array
                 counter = 0;
                 pauseCounter = 0;
                 lblCurrentPlayer.Text = "Player 1 (RED)";
+                // newButton[rowID, colID].Text = "2";
 
                 if (rowID == 0)
                 {
@@ -266,10 +273,25 @@ namespace Bingo.Classes
             }
             else
             {
+                Player1.setPlayerName(txtPlayer1Name.Text);
+                Player1.setPlayerID(p1ID);
+                Player1.setPlayerColor(p1Color);
+
+                Player2.setPlayerName(txtPlayer2Name.Text);
+                Player2.setPlayerID(p2ID);
+                Player2.setPlayerColor(p2Color);
+
+                Console.WriteLine(Player1.getPlayerName());
+                Console.WriteLine(Player2.getPlayerName());
+
                 pnlCard.Visible = true;
                 createCard();
                 btnYes.Enabled = false;
+                lblCurrentPlayer.Visible = true;
                 lblCurrentPlayer.Text = "Player 1 Move (RED)";
+
+                txtPlayer1Name.ReadOnly = true;
+                txtPlayer2Name.ReadOnly = true;
 
                 t.Tick += new EventHandler(timer_Tick);
                 t.Interval = 30; // specify interval time as you want
@@ -306,7 +328,7 @@ namespace Bingo.Classes
         
         void timer_Tick(object sender, EventArgs e)
         {
-            if(currentPlayer == 1)
+            if(currentPlayer == Player1.getPlayerID())
             {
                 if (clickedRowID == 0)
                 {
@@ -345,10 +367,11 @@ namespace Bingo.Classes
                 {
                     pause.Start();
                     //MessageBox.Show("working?");
+                    newButton[clickedRowID, clickedColID].Text = "1";
                     t.Stop();
                 }
             }
-            else if(currentPlayer == 2)
+            else if(currentPlayer == Player2.getPlayerID())
             {
                 if (clickedRowID == 0)
                 {
@@ -386,6 +409,7 @@ namespace Bingo.Classes
                 if (counter == clickedRowID)
                 {
                     pause.Start();
+                    newButton[clickedRowID, clickedColID].Text = "2";
                     //MessageBox.Show("working?");
                     t.Stop();
                 }
@@ -394,19 +418,21 @@ namespace Bingo.Classes
 
         void pause_Tick(object sender, EventArgs e)
         {
-            Console.WriteLine("Pause Counter: " + counter);
-            Console.WriteLine(clickedColID);
+            // Console.WriteLine("Pause Counter: " + counter);
+            // Console.WriteLine(clickedColID);
             if(clickedRowID == 0)
             {
-                if (currentPlayer == 1)
+                if (currentPlayer == Player1.getPlayerID())
                 {
                     newButton[clickedRowID, clickedColID].BackColor = System.Drawing.Color.Red;
-                    currentPlayer = 2;
+                    //newButton[clickedRowID, clickedColID].Text = "1";
+                    currentPlayer = Player2.getPlayerID();
                 }
-                else if (currentPlayer == 2)
+                else if (currentPlayer == Player2.getPlayerID())
                 {
                     newButton[clickedRowID, clickedColID].BackColor = System.Drawing.Color.Yellow;
-                    currentPlayer = 1;
+                    //newButton[clickedRowID, clickedColID].Text = "2";
+                    currentPlayer = Player1.getPlayerID();
                 }
                 pause.Stop();
             }
@@ -415,10 +441,10 @@ namespace Bingo.Classes
                 newButton[counter - 1, clickedColID].BackColor = System.Drawing.Color.LightGray;
                 counter = 0;
                 pauseCounter = 1;
-                if(currentPlayer == 1)
+                if(currentPlayer == Player1.getPlayerID())
                 {
                     newButton[clickedRowID, clickedColID].BackColor = System.Drawing.Color.Red;
-                    currentPlayer = 2;
+                    currentPlayer = Player2.getPlayerID();
                     // Check for winner
                     if (board.checkConnectFour() == true)
                     {
@@ -426,10 +452,10 @@ namespace Bingo.Classes
                         this.Close();
                     }
                 }
-                else if(currentPlayer == 2)
+                else if(currentPlayer == Player2.getPlayerID())
                 {
                     newButton[clickedRowID, clickedColID].BackColor = System.Drawing.Color.Yellow;
-                    currentPlayer = 1;
+                    currentPlayer = Player1.getPlayerID();
                     // Check for winner
                     if (board.checkConnectFour() == true)
                     {

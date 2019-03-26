@@ -13,17 +13,49 @@ namespace Bingo.Classes
     {
         String playerName;
         int playerID;
+        string playerColor;
 
         //sets player name
-        public Player(String name)
+        public Player()
+        {
+
+        }
+
+        public Player(String name, int id, String color)
+        {
+            this.playerName = name;
+            this.playerID = id;
+            this.playerColor = color;
+        }
+
+        public void setPlayerName(string name)
         {
             this.playerName = name;
         }
 
-        public Player(String name, int id)
+        public String getPlayerName()
         {
-            this.playerName = name;
+            return this.playerName;
+        }
+
+        public void setPlayerID(int id)
+        {
             this.playerID = id;
+        }
+
+        public int getPlayerID()
+        {
+            return this.playerID;
+        }
+
+        public void setPlayerColor(string color)
+        {
+            this.playerColor = color;
+        }
+
+        public String getPlayerColor()
+        {
+            return this.playerColor;
         }
     }
 }
