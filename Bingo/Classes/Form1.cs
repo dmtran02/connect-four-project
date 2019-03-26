@@ -27,6 +27,8 @@ namespace Bingo.Classes
         //global objects
         private Button[,] newButton = new Button[CARDSIZE, CARDSIZE];
         InternalBoard board = new InternalBoard();
+        Timer t = new Timer();
+        Timer pause = new Timer();
 
         // Total width and height of a card cell
         int cardCellWidth = 75;
@@ -35,12 +37,20 @@ namespace Bingo.Classes
         int xcardUpperLeft = 45;
         int ycardUpperLeft = 45;
         int padding = 20;
+        int counter = 0;
+        int pauseCounter = 0;
+        int buttonClickCounter = 0;
 
-        public frmBingo()
+        int clickedRowID = 0;
+        int clickedColID = 0;
+
+            public frmBingo()
         {
             InitializeComponent();
             this.Height = 825;
+            this.Width = 900;
         }
+
         private void createCard() //creates cards on the board
         {           
             Size size = new Size(75, 75);          
@@ -72,6 +82,7 @@ namespace Bingo.Classes
                 for (int col = 0; col < CARDSIZE; col++)
                 {
                     newButton[row, col] = new Button();
+                    newButton[row, col].BackColor = Color.DarkGray;
                     newButton[row, col].Location = new Point(extraLeftPadding + col * (size.Width + padding) + barWidth, loc.Y);
                     newButton[row, col].Size = size;
                     newButton[row, col].Font = new Font("Arial", 24, FontStyle.Bold);
@@ -82,6 +93,7 @@ namespace Bingo.Classes
                     if(row == 5)
                     {
                         newButton[row, col].Enabled = true;
+                        newButton[row, col].BackColor = Color.LightGray;
                     }
                     else
                     {
@@ -163,19 +175,22 @@ namespace Bingo.Classes
 
         private void Button_Click(object sender, EventArgs e)  //event handler when a bingo card is clicked
         {
-            
+            buttonClickCounter++;
             int rowID = convertCharToInt(((Button)sender).Name[3]);
             int colID = convertCharToInt(((Button)sender).Name[4]);
-            MessageBox.Show("Cell[" + rowID + "," + colID + "] has been selected!");
+            //MessageBox.Show("Cell[" + rowID + "," + colID + "] has been selected!");
             int cellID = rowID * 3 + colID;            
             
             if (currentPlayer == 1)
              {
-                // implement code for when btn is clicked, the ascending btn is enabled 
-                // while clicked btn is disabled for both player clicks
-                newButton[rowID, colID].BackColor = System.Drawing.Color.Red;
+                clickedRowID = rowID;
+                clickedColID = colID;
+                t.Start();
+                //newButton[rowID, colID].BackColor = System.Drawing.Color.Red;
                 newButton[rowID, colID].Enabled = false;                                
-                board.markCell(rowID, colID, currentPlayer);   //mark cell in internal 2d array    
+                board.markCell(rowID, colID, currentPlayer);   //mark cell in internal 2d array   
+                counter = 0;
+                lblCurrentPlayer.Text = "Player 2 (YELLOW)";
                 if(rowID == 0)
                 {
                     Console.WriteLine(colID + " has reached the top of the board.");
@@ -185,19 +200,22 @@ namespace Bingo.Classes
                     newButton[rowID - 1, colID].Enabled = true;
                 }
 
-                // Check for winner
-                if (board.checkConnectFour() == true)
-                {
-                    MessageBox.Show("Player 1 Wins! Congrats!", "You are a Winner!");
-                    this.Close();
-                }                            
-                 playTheGame();               
+                
+                counter = 0;
+                pauseCounter = 0;
+                              
             }
             else if(currentPlayer == 2)
             {
-                newButton[rowID, colID].BackColor = System.Drawing.Color.Yellow;
+                clickedRowID = rowID;
+                clickedColID = colID;
+                t.Start();
+                //newButton[rowID, colID].BackColor = System.Drawing.Color.Yellow;
                 newButton[rowID, colID].Enabled = false;
                 board.markCell(rowID, colID, currentPlayer);   //mark cell in internal 2d array
+                counter = 0;
+                pauseCounter = 0;
+                lblCurrentPlayer.Text = "Player 1 (RED)";
 
                 if (rowID == 0)
                 {
@@ -208,18 +226,14 @@ namespace Bingo.Classes
                     newButton[rowID - 1, colID].Enabled = true;
                 }
 
-                // Check for winner
-                if (board.checkConnectFour() == true)
-                {
-                    MessageBox.Show("Player 2 Wins! Congrats!", "You are a Winner!");
-                    this.Close();
-                }
-                playTheGame();
+                
+                
             }
-             else
-             {
-                 MessageBox.Show("Called number does not match the one in the box you selected." + "Try again!", "Numbers Do Not Match");
-             } // end outer if
+            if(buttonClickCounter == 42)
+            {
+                MessageBox.Show("Uh oh... Both of you failed to win. Exiting game now!", "Tie Detected");
+                this.Close();
+            }
              
         } // end button clickhandler 
 
@@ -256,6 +270,12 @@ namespace Bingo.Classes
                 createCard();
                 btnYes.Enabled = false;
                 lblCurrentPlayer.Text = "Player 1 Move (RED)";
+
+                t.Tick += new EventHandler(timer_Tick);
+                t.Interval = 30; // specify interval time as you want
+
+                pause.Tick += new EventHandler(pause_Tick);
+                pause.Interval = 30;
             }
         }
 
@@ -264,12 +284,10 @@ namespace Bingo.Classes
             if(currentPlayer == 1)
             {
                 currentPlayer = 2;
-                lblCurrentPlayer.Text = "Player 2 Move (YELLOW)";
             }
             else if(currentPlayer == 2)
             {
                 currentPlayer = 1;
-                lblCurrentPlayer.Text = "Player 1 Move (RED)";
             }
             /*
              while(currentPlayer == 1)
@@ -284,6 +302,145 @@ namespace Bingo.Classes
                 currentPlayer = 1;
             }
             */
-        } // end playTheGame  
+        } // end playTheGame
+        
+        void timer_Tick(object sender, EventArgs e)
+        {
+            if(currentPlayer == 1)
+            {
+                if (clickedRowID == 0)
+                {
+                    pause.Start();
+                }
+                else if (counter == 0)
+                {
+                    newButton[counter, clickedColID].BackColor = System.Drawing.Color.Red;
+                    counter++;
+                }
+                else if (counter == 1)
+                {
+                    newButton[counter - 1, clickedColID].BackColor = System.Drawing.Color.DarkGray;
+                    newButton[counter, clickedColID].BackColor = System.Drawing.Color.Red;
+                    counter++;
+                }
+                else if (counter == 2)
+                {
+                    newButton[counter - 1, clickedColID].BackColor = System.Drawing.Color.DarkGray;
+                    newButton[counter, clickedColID].BackColor = System.Drawing.Color.Red;
+                    counter++;
+                }
+                else if (counter == 3)
+                {
+                    newButton[counter - 1, clickedColID].BackColor = System.Drawing.Color.DarkGray;
+                    newButton[counter, clickedColID].BackColor = System.Drawing.Color.Red;
+                    counter++;
+                }
+                else if (counter == 4)
+                {
+                    newButton[counter - 1, clickedColID].BackColor = System.Drawing.Color.DarkGray;
+                    newButton[counter, clickedColID].BackColor = System.Drawing.Color.Red;
+                    counter++;
+                }
+                if (counter == clickedRowID)
+                {
+                    pause.Start();
+                    //MessageBox.Show("working?");
+                    t.Stop();
+                }
+            }
+            else if(currentPlayer == 2)
+            {
+                if (clickedRowID == 0)
+                {
+                    pause.Start();
+                }
+                else if (counter == 0)
+                {
+                    newButton[counter, clickedColID].BackColor = System.Drawing.Color.Yellow;
+                    counter++;
+                }
+                else if (counter == 1)
+                {
+                    newButton[counter - 1, clickedColID].BackColor = System.Drawing.Color.DarkGray;
+                    newButton[counter, clickedColID].BackColor = System.Drawing.Color.Yellow;
+                    counter++;
+                }
+                else if (counter == 2)
+                {
+                    newButton[counter - 1, clickedColID].BackColor = System.Drawing.Color.DarkGray;
+                    newButton[counter, clickedColID].BackColor = System.Drawing.Color.Yellow;
+                    counter++;
+                }
+                else if (counter == 3)
+                {
+                    newButton[counter - 1, clickedColID].BackColor = System.Drawing.Color.DarkGray;
+                    newButton[counter, clickedColID].BackColor = System.Drawing.Color.Yellow;
+                    counter++;
+                }
+                else if (counter == 4)
+                {
+                    newButton[counter - 1, clickedColID].BackColor = System.Drawing.Color.DarkGray;
+                    newButton[counter, clickedColID].BackColor = System.Drawing.Color.Yellow;
+                    counter++;
+                }
+                if (counter == clickedRowID)
+                {
+                    pause.Start();
+                    //MessageBox.Show("working?");
+                    t.Stop();
+                }
+            }
+        }
+
+        void pause_Tick(object sender, EventArgs e)
+        {
+            Console.WriteLine("Pause Counter: " + counter);
+            Console.WriteLine(clickedColID);
+            if(clickedRowID == 0)
+            {
+                if (currentPlayer == 1)
+                {
+                    newButton[clickedRowID, clickedColID].BackColor = System.Drawing.Color.Red;
+                    currentPlayer = 2;
+                }
+                else if (currentPlayer == 2)
+                {
+                    newButton[clickedRowID, clickedColID].BackColor = System.Drawing.Color.Yellow;
+                    currentPlayer = 1;
+                }
+                pause.Stop();
+            }
+            else if(pauseCounter == 0)
+            {
+                newButton[counter - 1, clickedColID].BackColor = System.Drawing.Color.LightGray;
+                counter = 0;
+                pauseCounter = 1;
+                if(currentPlayer == 1)
+                {
+                    newButton[clickedRowID, clickedColID].BackColor = System.Drawing.Color.Red;
+                    currentPlayer = 2;
+                    // Check for winner
+                    if (board.checkConnectFour() == true)
+                    {
+                        MessageBox.Show("Player 1 Wins! Congrats!", "You are a Winner!");
+                        this.Close();
+                    }
+                }
+                else if(currentPlayer == 2)
+                {
+                    newButton[clickedRowID, clickedColID].BackColor = System.Drawing.Color.Yellow;
+                    currentPlayer = 1;
+                    // Check for winner
+                    if (board.checkConnectFour() == true)
+                    {
+                        MessageBox.Show("Player 2 Wins! Congrats!", "You are a Winner!");
+                        this.Close();
+                    }
+                }
+                pause.Stop();
+            }
+ 
+            pauseCounter++;
+        }
     }
 }
