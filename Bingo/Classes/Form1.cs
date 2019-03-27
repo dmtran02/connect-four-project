@@ -453,7 +453,6 @@ namespace Bingo.Classes
                 }
                 pause.Stop();
             }
- 
             pauseCounter++;
         }
     }

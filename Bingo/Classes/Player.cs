@@ -1,7 +1,4 @@
-﻿/*Tommy Huynh
- * 1/29/19
- * Purpose: Holds player name*/
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

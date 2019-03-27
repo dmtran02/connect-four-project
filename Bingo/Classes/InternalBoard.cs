@@ -11,8 +11,8 @@ namespace Bingo.Classes
 {
     public class InternalBoard
     {
-        int height = 7;
-        int width = 8;
+        int height = 6;
+        int width = 7;
 
         int player1 = 1;
         int player2 = 2;
@@ -22,7 +22,13 @@ namespace Bingo.Classes
         //constructor
         public InternalBoard()
         {
-
+            for(int i = 0; i < 8; i++)
+            {
+                for( int j = 0; j<9; j++)
+                {
+                    array2D[i, j] = 0;
+                }
+            }
         }
 
         public int getHeight()
