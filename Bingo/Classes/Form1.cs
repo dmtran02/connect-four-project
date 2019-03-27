@@ -437,7 +437,45 @@ namespace Bingo.Classes
                     if (board.checkConnectFour() == true)
                     {
                         MessageBox.Show(Player1.getPlayerName().ToString() + " (Player 1) Wins! Congrats!", "You are a Winner!");
-                        this.Close();
+                        DialogResult dg = MessageBox.Show("Would you like to play again?", "Play again?", MessageBoxButtons.YesNo);
+                        if (dg == DialogResult.Yes)
+                        {
+                            board.resetBoard();
+                            buttonClickCounter = 0;
+                            currentPlayer = Player1.getPlayerID();
+                            lblCurrentPlayer.Text = "Player " + Player1.getPlayerID().ToString() + " Move (" + Player1.getPlayerColor().ToString() + ")";
+                            for (int row = 0; row < CARDSIZE - 1; row++)
+                            {
+
+
+                                for (int col = 0; col < CARDSIZE; col++)
+                                {
+
+                                    newButton[row, col].BackColor = Color.DarkGray;
+                                    newButton[row, col].Text = "0";
+
+
+                                    if (row == 5)
+                                    {
+                                        newButton[row, col].Enabled = true;
+                                        newButton[row, col].BackColor = Color.LightGray;
+                                    }
+                                    else
+                                    {
+                                        newButton[row, col].Enabled = false;
+                                    }
+                                    newButton[row, col].Name = "btn" + row.ToString() + col.ToString();
+
+                                    // Associates the same event handler with each of the buttons generated
+                                    newButton[row, col].Click += new EventHandler(Button_Click);
+                                }
+                            } // end for col
+
+                        }
+                        else if (dg == DialogResult.No)
+                        {
+                            this.Close();
+                        }
                     }
                 }
                 else if(currentPlayer == Player2.getPlayerID())
@@ -448,7 +486,45 @@ namespace Bingo.Classes
                     if (board.checkConnectFour() == true)
                     {
                         MessageBox.Show(Player2.getPlayerName().ToString() + " (Player 2) Wins! Congrats!", "You are a Winner!");
-                        this.Close();
+                        DialogResult dg = MessageBox.Show("Would you like to play again?", "Play again?", MessageBoxButtons.YesNo);
+                        if(dg == DialogResult.Yes)
+                        {
+                            board.resetBoard();
+                            buttonClickCounter = 0;
+                            currentPlayer = Player1.getPlayerID();
+                            lblCurrentPlayer.Text = "Player " + Player1.getPlayerID().ToString() + " Move (" + Player1.getPlayerColor().ToString() + ")";
+                            for (int row = 0; row < CARDSIZE - 1; row++)
+                            {
+
+
+                                for (int col = 0; col < CARDSIZE; col++)
+                                {
+
+                                    newButton[row, col].BackColor = Color.DarkGray;
+                                    newButton[row, col].Text = "0";
+
+
+                                    if (row == 5)
+                                    {
+                                        newButton[row, col].Enabled = true;
+                                        newButton[row, col].BackColor = Color.LightGray;
+                                    }
+                                    else
+                                    {
+                                        newButton[row, col].Enabled = false;
+                                    }
+                                    newButton[row, col].Name = "btn" + row.ToString() + col.ToString();
+
+                                    // Associates the same event handler with each of the buttons generated
+                                    newButton[row, col].Click += new EventHandler(Button_Click);
+                                }
+                                } // end for col
+
+                            }
+                        else if(dg == DialogResult.No)
+                        {
+                            this.Close();
+                        }
                     }
                 }
                 pause.Stop();
