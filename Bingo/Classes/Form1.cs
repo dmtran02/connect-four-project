@@ -14,7 +14,7 @@ using System.Windows.Forms;
 //Tommy
 namespace Bingo.Classes
 {
-    public partial class frmBingo : Form
+    public partial class frmConnectFour : Form
     {
         //global variables to be used
         private const int CARDSIZE = 7;
@@ -52,7 +52,7 @@ namespace Bingo.Classes
         Player Player1 = new Player();
         Player Player2 = new Player();
 
-        public frmBingo()
+        public frmConnectFour()
         {
             InitializeComponent();
             this.Height = 800;

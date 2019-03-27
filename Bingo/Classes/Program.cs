@@ -19,7 +19,7 @@ namespace Bingo.Classes
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmBingo());
+            Application.Run(new frmConnectFour());
         }
     }
 }
