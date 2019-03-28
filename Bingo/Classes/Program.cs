@@ -1,7 +1,4 @@
-﻿/*Tommy Huynh
- * 1/29/19
- * Purpose: runs the form*/
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

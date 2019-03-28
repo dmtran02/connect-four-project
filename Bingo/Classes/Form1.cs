@@ -1,7 +1,4 @@
-﻿/*Tommy Huynh
- * 2/5/19
- * Purpose: Implements form letting user play bingo*/
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-//Tommy
 namespace Bingo.Classes
 {
     public partial class frmConnectFour : Form
@@ -238,12 +234,49 @@ namespace Bingo.Classes
                 
                 
             }
-            if(buttonClickCounter == clickButtonMax)
+            if (buttonClickCounter == clickButtonMax)
             {
-                MessageBox.Show("Uh oh... Both of you failed to win. Exiting game now!", "Tie Detected");
-                this.Close();
+                MessageBox.Show("Uh oh! Looks like you have reached a tie!", "Tie Detected");
+                DialogResult dg = MessageBox.Show("Would you like to play again?", "Play again?", MessageBoxButtons.YesNo);
+                if (dg == DialogResult.Yes)
+                {
+                    board.resetBoard();
+                    buttonClickCounter = 0;
+                    currentPlayer = Player1.getPlayerID();
+                    lblCurrentPlayer.Text = "Player " + Player1.getPlayerID().ToString() + " Move (" + Player1.getPlayerColor().ToString() + ")";
+                    for (int row = 0; row < CARDSIZE - 1; row++)
+                    {
+
+
+                        for (int col = 0; col < CARDSIZE; col++)
+                        {
+
+                            newButton[row, col].BackColor = Color.DarkGray;
+                            newButton[row, col].Text = "0";
+
+
+                            if (row == 5)
+                            {
+                                newButton[row, col].Enabled = true;
+                                newButton[row, col].BackColor = Color.LightGray;
+                            }
+                            else
+                            {
+                                newButton[row, col].Enabled = false;
+                            }
+                            newButton[row, col].Name = "btn" + row.ToString() + col.ToString();
+
+                            // Associates the same event handler with each of the buttons generated
+                            //newButton[row, col].Click += new EventHandler(Button_Click);
+                        }
+                    } // end for col
+
+                }
+                else if (dg == DialogResult.No)
+                {
+                    this.Close();
+                }
             }
-             
         } // end button clickhandler 
 
         public int convertCharToInt(char c)  //converts a character to an int
