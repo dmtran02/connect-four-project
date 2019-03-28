@@ -44,43 +44,46 @@
             // 
             this.lblWelcome.AutoSize = true;
             this.lblWelcome.ForeColor = System.Drawing.Color.Crimson;
-            this.lblWelcome.Location = new System.Drawing.Point(276, 7);
+            this.lblWelcome.Location = new System.Drawing.Point(207, 6);
+            this.lblWelcome.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblWelcome.Name = "lblWelcome";
-            this.lblWelcome.Size = new System.Drawing.Size(174, 17);
+            this.lblWelcome.Size = new System.Drawing.Size(134, 13);
             this.lblWelcome.TabIndex = 0;
             this.lblWelcome.Text = "Welcome to Connect Four!";
             // 
             // lblPlayer1Name
             // 
-            this.lblPlayer1Name.Location = new System.Drawing.Point(101, 38);
+            this.lblPlayer1Name.Location = new System.Drawing.Point(76, 31);
+            this.lblPlayer1Name.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblPlayer1Name.Name = "lblPlayer1Name";
-            this.lblPlayer1Name.Size = new System.Drawing.Size(136, 33);
+            this.lblPlayer1Name.Size = new System.Drawing.Size(102, 27);
             this.lblPlayer1Name.TabIndex = 1;
             this.lblPlayer1Name.Text = "Player 1:";
             // 
             // txtPlayer1Name
             // 
-            this.txtPlayer1Name.Location = new System.Drawing.Point(173, 36);
-            this.txtPlayer1Name.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtPlayer1Name.Location = new System.Drawing.Point(130, 29);
+            this.txtPlayer1Name.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtPlayer1Name.Name = "txtPlayer1Name";
-            this.txtPlayer1Name.Size = new System.Drawing.Size(160, 22);
+            this.txtPlayer1Name.Size = new System.Drawing.Size(121, 20);
             this.txtPlayer1Name.TabIndex = 1;
             // 
             // lblPlay
             // 
             this.lblPlay.AutoSize = true;
-            this.lblPlay.Location = new System.Drawing.Point(60, 85);
+            this.lblPlay.Location = new System.Drawing.Point(45, 69);
+            this.lblPlay.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblPlay.Name = "lblPlay";
-            this.lblPlay.Size = new System.Drawing.Size(151, 17);
+            this.lblPlay.Size = new System.Drawing.Size(112, 13);
             this.lblPlay.TabIndex = 3;
             this.lblPlay.Text = "Are you ready to play?";
             // 
             // btnYes
             // 
-            this.btnYes.Location = new System.Drawing.Point(260, 76);
-            this.btnYes.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnYes.Location = new System.Drawing.Point(195, 62);
+            this.btnYes.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnYes.Name = "btnYes";
-            this.btnYes.Size = new System.Drawing.Size(116, 34);
+            this.btnYes.Size = new System.Drawing.Size(87, 28);
             this.btnYes.TabIndex = 3;
             this.btnYes.Text = "Yes, let\'s play!";
             this.btnYes.UseVisualStyleBackColor = true;
@@ -88,10 +91,10 @@
             // 
             // btnExit
             // 
-            this.btnExit.Location = new System.Drawing.Point(407, 76);
-            this.btnExit.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnExit.Location = new System.Drawing.Point(305, 62);
+            this.btnExit.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(116, 34);
+            this.btnExit.Size = new System.Drawing.Size(87, 28);
             this.btnExit.TabIndex = 4;
             this.btnExit.Text = "No, exit.";
             this.btnExit.UseVisualStyleBackColor = true;
@@ -99,45 +102,47 @@
             // 
             // pnlCard
             // 
-            this.pnlCard.Location = new System.Drawing.Point(83, 130);
-            this.pnlCard.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pnlCard.Location = new System.Drawing.Point(62, 106);
+            this.pnlCard.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pnlCard.Name = "pnlCard";
-            this.pnlCard.Size = new System.Drawing.Size(1020, 1100);
+            this.pnlCard.Size = new System.Drawing.Size(765, 894);
             this.pnlCard.TabIndex = 9;
             this.pnlCard.Visible = false;
             // 
             // lblPlayer2Name
             // 
-            this.lblPlayer2Name.Location = new System.Drawing.Point(368, 36);
+            this.lblPlayer2Name.Location = new System.Drawing.Point(276, 29);
+            this.lblPlayer2Name.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblPlayer2Name.Name = "lblPlayer2Name";
-            this.lblPlayer2Name.Size = new System.Drawing.Size(136, 33);
+            this.lblPlayer2Name.Size = new System.Drawing.Size(102, 27);
             this.lblPlayer2Name.TabIndex = 10;
             this.lblPlayer2Name.Text = "Player 2:";
             // 
             // txtPlayer2Name
             // 
-            this.txtPlayer2Name.Location = new System.Drawing.Point(437, 34);
-            this.txtPlayer2Name.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtPlayer2Name.Location = new System.Drawing.Point(328, 28);
+            this.txtPlayer2Name.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtPlayer2Name.Name = "txtPlayer2Name";
-            this.txtPlayer2Name.Size = new System.Drawing.Size(160, 22);
+            this.txtPlayer2Name.Size = new System.Drawing.Size(121, 20);
             this.txtPlayer2Name.TabIndex = 2;
             // 
             // lblCurrentPlayer
             // 
             this.lblCurrentPlayer.AutoSize = true;
-            this.lblCurrentPlayer.Location = new System.Drawing.Point(667, 76);
+            this.lblCurrentPlayer.Location = new System.Drawing.Point(500, 62);
+            this.lblCurrentPlayer.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblCurrentPlayer.Name = "lblCurrentPlayer";
-            this.lblCurrentPlayer.Size = new System.Drawing.Size(99, 17);
+            this.lblCurrentPlayer.Size = new System.Drawing.Size(73, 13);
             this.lblCurrentPlayer.TabIndex = 12;
             this.lblCurrentPlayer.Text = "Current Player";
             this.lblCurrentPlayer.Visible = false;
             // 
             // frmConnectFour
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(856, 500);
+            this.ClientSize = new System.Drawing.Size(904, 972);
             this.Controls.Add(this.lblCurrentPlayer);
             this.Controls.Add(this.txtPlayer2Name);
             this.Controls.Add(this.lblPlayer2Name);
@@ -148,7 +153,7 @@
             this.Controls.Add(this.txtPlayer1Name);
             this.Controls.Add(this.lblPlayer1Name);
             this.Controls.Add(this.lblWelcome);
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "frmConnectFour";
             this.Text = "Connect Four";
             this.ResumeLayout(false);

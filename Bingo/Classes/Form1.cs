@@ -183,6 +183,7 @@ namespace Bingo.Classes
         private void Button_Click(object sender, EventArgs e)  //event handler when a bingo card is clicked
         {
             buttonClickCounter++;
+            Console.WriteLine(buttonClickCounter);
             int rowID = convertCharToInt(((Button)sender).Name[3]);
             int colID = convertCharToInt(((Button)sender).Name[4]);
             //MessageBox.Show("Cell[" + rowID + "," + colID + "] has been selected!");
@@ -467,7 +468,7 @@ namespace Bingo.Classes
                                     newButton[row, col].Name = "btn" + row.ToString() + col.ToString();
 
                                     // Associates the same event handler with each of the buttons generated
-                                    newButton[row, col].Click += new EventHandler(Button_Click);
+                                    //newButton[row, col].Click += new EventHandler(Button_Click);
                                 }
                             } // end for col
 
@@ -516,7 +517,7 @@ namespace Bingo.Classes
                                     newButton[row, col].Name = "btn" + row.ToString() + col.ToString();
 
                                     // Associates the same event handler with each of the buttons generated
-                                    newButton[row, col].Click += new EventHandler(Button_Click);
+                                    //newButton[row, col].Click += new EventHandler(Button_Click);
                                 }
                                 } // end for col
 
