@@ -55,10 +55,16 @@
     </Compile>
     <Compile Include="Classes\Player.cs" />
     <Compile Include="Classes\Program.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Classes\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="obj\Debug\Bingo.Classes.frmBingo.resources" />
+    <EmbeddedResource Include="obj\Debug\Bingo.Classes.frmConnectFour.resources" />
+    <EmbeddedResource Include="obj\Debug\Bingo.Properties.Resources.resources" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -68,6 +74,17 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="bin\Debug\Bingo.exe.config" />
+    <None Include="obj\Debug\Bingo.csproj.CoreCompileInputs.cache" />
+    <None Include="obj\Debug\Bingo.csproj.GenerateResource.cache" />
+    <None Include="obj\Debug\Bingo.csprojAssemblyReference.cache" />
+    <None Include="obj\Debug\ConnectFour.csproj.CoreCompileInputs.cache" />
+    <None Include="obj\Debug\ConnectFour.csproj.GenerateResource.cache" />
+    <None Include="obj\Debug\ConnectFour.csproj.ResolveComReference.cache" />
+    <None Include="obj\Debug\ConnectFour.csprojAssemblyReference.cache" />
+    <None Include="obj\Debug\DesignTimeResolveAssemblyReferences.cache" />
+    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="obj\Release\Bingo.csproj.CoreCompileInputs.cache" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -82,7 +99,44 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="bin\Release\" />
     <Folder Include="Images\Pieces\" />
+    <Folder Include="obj\Debug\TempPE\" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="AxWMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="WMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\AxInterop.WMPLib.dll" />
+    <Content Include="bin\Debug\Bingo.exe" />
+    <Content Include="bin\Debug\Bingo.pdb" />
+    <Content Include="bin\Debug\Interop.WMPLib.dll" />
+    <Content Include="bin\Debug\Sound\Connect4Piece.wav" />
+    <Content Include="bin\Debug\Sound\Main_Theme.mp3" />
+    <Content Include="obj\Debug\AxInterop.WMPLib.dll" />
+    <Content Include="obj\Debug\Bingo.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\Bingo.exe" />
+    <Content Include="obj\Debug\Bingo.pdb" />
+    <Content Include="obj\Debug\ConnectFour.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\Interop.WMPLib.dll" />
+    <Content Include="Sound\Connect4Piece.wav" />
+    <Content Include="Sound\Main_Theme.mp3" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

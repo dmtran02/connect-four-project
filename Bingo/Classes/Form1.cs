@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Media;
+using WMPLib;
+using System.IO;
 
 namespace Bingo.Classes
 {
@@ -17,12 +20,14 @@ namespace Bingo.Classes
         private const int clickButtonMax = 42;
 
         private int currentPlayer = 1;
-        
+
         //global objects
         private Button[,] newButton = new Button[CARDSIZE, CARDSIZE];
         InternalBoard board = new InternalBoard();
         Timer t = new Timer();
         Timer pause = new Timer();
+        WindowsMediaPlayer piecePlayer = new WindowsMediaPlayer();
+        WindowsMediaPlayer wplayer = new WindowsMediaPlayer();
 
         // Total width and height of a card cell
         int cardCellWidth = 75;
@@ -53,11 +58,18 @@ namespace Bingo.Classes
             InitializeComponent();
             this.Height = 800;
             this.Width = 900;
+
+            String musicPath = Path.GetDirectoryName(Application.ExecutablePath) + @"\Sound\Main_Theme.mp3";
+            wplayer.URL = musicPath;
+            wplayer.controls.play();
+            wplayer.settings.playCount = 99;
+
+
         }
 
         private void createCard() //creates cards on the board
-        {           
-            Size size = new Size(75, 75);          
+        {
+            Size size = new Size(75, 75);
             Point loc = new Point(0, 0);
             int topMargin = 60;
 
@@ -77,8 +89,8 @@ namespace Bingo.Classes
 
             // The board is treated like a 5x5 array
             drawVertBar(x, y);
-             
-            for (int row = 0; row < CARDSIZE-1; row++)
+
+            for (int row = 0; row < CARDSIZE - 1; row++)
             {
                 loc.Y = topMargin + row * (size.Height + padding);
                 int extraLeftPadding = 50;
@@ -93,7 +105,7 @@ namespace Bingo.Classes
                     newButton[row, col].Font = new Font("Arial", 24, FontStyle.Bold);
                     newButton[row, col].Text = "0";
 
-                    if(row == 5)
+                    if (row == 5)
                     {
                         newButton[row, col].Enabled = true;
                         newButton[row, col].BackColor = Color.LightGray;
@@ -103,14 +115,12 @@ namespace Bingo.Classes
                         newButton[row, col].Enabled = false;
                     }
                     newButton[row, col].Name = "btn" + row.ToString() + col.ToString();
-                    
+
                     // Associates the same event handler with each of the buttons generated
                     newButton[row, col].Click += new EventHandler(Button_Click);
 
                     // Add button to the form
                     pnlCard.Controls.Add(newButton[row, col]);
-                   
-                   
 
                     // Draw vertical delimiter                 
                     x += cardCellWidth + padding;
@@ -178,20 +188,23 @@ namespace Bingo.Classes
 
         private void Button_Click(object sender, EventArgs e)  //event handler when a bingo card is clicked
         {
+            String piecePath = Path.GetDirectoryName(Directory.GetCurrentDirectory()) + @"\Debug\Sound\Connect4Piece.wav";
+            piecePlayer.URL = piecePath;
+            piecePlayer.controls.play();
             buttonClickCounter++;
             Console.WriteLine(buttonClickCounter);
             int rowID = convertCharToInt(((Button)sender).Name[3]);
             int colID = convertCharToInt(((Button)sender).Name[4]);
             //MessageBox.Show("Cell[" + rowID + "," + colID + "] has been selected!");
-            int cellID = rowID * 3 + colID;            
-            
+            int cellID = rowID * 3 + colID;
+
             if (currentPlayer == Player1.getPlayerID())
-             {
+            {
                 clickedRowID = rowID;
                 clickedColID = colID;
                 t.Start();
                 //newButton[rowID, colID].BackColor = System.Drawing.Color.Red;
-                newButton[rowID, colID].Enabled = false;                                
+                newButton[rowID, colID].Enabled = false;
                 board.markCell(rowID, colID, currentPlayer);   //mark cell in internal 2d array   
                 counter = 0;
                 lblCurrentPlayer.Text = "Player " + Player2.getPlayerID().ToString() + " Move (" + Player2.getPlayerColor().ToString() + ")";
@@ -205,12 +218,12 @@ namespace Bingo.Classes
                     newButton[rowID - 1, colID].Enabled = true;
                 }
 
-                
+
                 counter = 0;
                 pauseCounter = 0;
-                              
+
             }
-            else if(currentPlayer == Player2.getPlayerID())
+            else if (currentPlayer == Player2.getPlayerID())
             {
                 clickedRowID = rowID;
                 clickedColID = colID;
@@ -231,8 +244,8 @@ namespace Bingo.Classes
                     newButton[rowID - 1, colID].Enabled = true;
                 }
 
-                
-                
+
+
             }
             if (buttonClickCounter == clickButtonMax)
             {
@@ -283,7 +296,7 @@ namespace Bingo.Classes
         {
             return (int)char.GetNumericValue(c);
         }
-           
+
         private void btnExit_Click(object sender, EventArgs e) //event handler for exit button
         {
             Close();
@@ -319,6 +332,7 @@ namespace Bingo.Classes
                 Console.WriteLine(Player1.getPlayerName());
                 Console.WriteLine(Player2.getPlayerName());
 
+                lblPlay.Visible = false;
                 pnlCard.Visible = true;
                 createCard();
                 btnYes.Enabled = false;
@@ -342,15 +356,15 @@ namespace Bingo.Classes
             {
                 currentPlayer = Player2.getPlayerID();
             }
-            else if(currentPlayer == Player2.getPlayerID())
+            else if (currentPlayer == Player2.getPlayerID())
             {
                 currentPlayer = Player1.getPlayerID();
             }
         } // end playTheGame
-        
+
         void timer_Tick(object sender, EventArgs e)
         {
-            if(currentPlayer == Player1.getPlayerID())
+            if (currentPlayer == Player1.getPlayerID())
             {
                 if (clickedRowID == 0)
                 {
@@ -393,7 +407,7 @@ namespace Bingo.Classes
                     t.Stop();
                 }
             }
-            else if(currentPlayer == Player2.getPlayerID())
+            else if (currentPlayer == Player2.getPlayerID())
             {
                 if (clickedRowID == 0)
                 {
@@ -442,128 +456,132 @@ namespace Bingo.Classes
         {
             // Console.WriteLine("Pause Counter: " + counter);
             // Console.WriteLine(clickedColID);
-            if(clickedRowID == 0)
+            if (clickedRowID == 0)
             {
                 if (currentPlayer == Player1.getPlayerID())
                 {
                     newButton[clickedRowID, clickedColID].BackColor = System.Drawing.Color.Red;
-                    //newButton[clickedRowID, clickedColID].Text = "1";
-                    currentPlayer = Player2.getPlayerID();
                 }
                 else if (currentPlayer == Player2.getPlayerID())
                 {
                     newButton[clickedRowID, clickedColID].BackColor = System.Drawing.Color.Yellow;
-                    //newButton[clickedRowID, clickedColID].Text = "2";
-                    currentPlayer = Player1.getPlayerID();
                 }
                 pause.Stop();
             }
-            else if(pauseCounter == 0)
+            else if (pauseCounter == 0)
             {
                 newButton[counter - 1, clickedColID].BackColor = System.Drawing.Color.LightGray;
                 counter = 0;
                 pauseCounter = 1;
-                if(currentPlayer == Player1.getPlayerID())
+                if (currentPlayer == Player1.getPlayerID())
                 {
                     newButton[clickedRowID, clickedColID].BackColor = System.Drawing.Color.Red;
-                    currentPlayer = Player2.getPlayerID();
-                    // Check for winner
-                    if (board.checkConnectFour() == true)
-                    {
-                        MessageBox.Show(Player1.getPlayerName().ToString() + " (Player 1) Wins! Congrats!", "You are a Winner!");
-                        DialogResult dg = MessageBox.Show("Would you like to play again?", "Play again?", MessageBoxButtons.YesNo);
-                        if (dg == DialogResult.Yes)
-                        {
-                            board.resetBoard();
-                            buttonClickCounter = 0;
-                            currentPlayer = Player1.getPlayerID();
-                            lblCurrentPlayer.Text = "Player " + Player1.getPlayerID().ToString() + " Move (" + Player1.getPlayerColor().ToString() + ")";
-                            for (int row = 0; row < CARDSIZE - 1; row++)
-                            {
-
-
-                                for (int col = 0; col < CARDSIZE; col++)
-                                {
-
-                                    newButton[row, col].BackColor = Color.DarkGray;
-                                    newButton[row, col].Text = "0";
-
-
-                                    if (row == 5)
-                                    {
-                                        newButton[row, col].Enabled = true;
-                                        newButton[row, col].BackColor = Color.LightGray;
-                                    }
-                                    else
-                                    {
-                                        newButton[row, col].Enabled = false;
-                                    }
-                                    newButton[row, col].Name = "btn" + row.ToString() + col.ToString();
-
-                                    // Associates the same event handler with each of the buttons generated
-                                    //newButton[row, col].Click += new EventHandler(Button_Click);
-                                }
-                            } // end for col
-
-                        }
-                        else if (dg == DialogResult.No)
-                        {
-                            this.Close();
-                        }
-                    }
                 }
-                else if(currentPlayer == Player2.getPlayerID())
+                else if (currentPlayer == Player2.getPlayerID())
                 {
                     newButton[clickedRowID, clickedColID].BackColor = System.Drawing.Color.Yellow;
-                    currentPlayer = Player1.getPlayerID();
-                    // Check for winner
-                    if (board.checkConnectFour() == true)
-                    {
-                        MessageBox.Show(Player2.getPlayerName().ToString() + " (Player 2) Wins! Congrats!", "You are a Winner!");
-                        DialogResult dg = MessageBox.Show("Would you like to play again?", "Play again?", MessageBoxButtons.YesNo);
-                        if(dg == DialogResult.Yes)
-                        {
-                            board.resetBoard();
-                            buttonClickCounter = 0;
-                            currentPlayer = Player1.getPlayerID();
-                            lblCurrentPlayer.Text = "Player " + Player1.getPlayerID().ToString() + " Move (" + Player1.getPlayerColor().ToString() + ")";
-                            for (int row = 0; row < CARDSIZE - 1; row++)
-                            {
-
-
-                                for (int col = 0; col < CARDSIZE; col++)
-                                {
-
-                                    newButton[row, col].BackColor = Color.DarkGray;
-                                    newButton[row, col].Text = "0";
-
-
-                                    if (row == 5)
-                                    {
-                                        newButton[row, col].Enabled = true;
-                                        newButton[row, col].BackColor = Color.LightGray;
-                                    }
-                                    else
-                                    {
-                                        newButton[row, col].Enabled = false;
-                                    }
-                                    newButton[row, col].Name = "btn" + row.ToString() + col.ToString();
-
-                                    // Associates the same event handler with each of the buttons generated
-                                    //newButton[row, col].Click += new EventHandler(Button_Click);
-                                }
-                                } // end for col
-
-                            }
-                        else if(dg == DialogResult.No)
-                        {
-                            this.Close();
-                        }
-                    }
                 }
                 pause.Stop();
             }
             pauseCounter++;
+            if (board.checkConnectFour() == true)
+            {
+                if (currentPlayer == Player1.getPlayerID())
+                {
+                    MessageBox.Show(Player1.getPlayerName().ToString() + " (Player 1) Wins! Congrats!", "You are a Winner!");
+                    DialogResult dg = MessageBox.Show("Would you like to play again?", "Play again?", MessageBoxButtons.YesNo);
+                    if (dg == DialogResult.Yes)
+                    {
+                        board.resetBoard();
+                        buttonClickCounter = 0;
+                        currentPlayer = Player1.getPlayerID();
+                        lblCurrentPlayer.Text = "Player " + Player1.getPlayerID().ToString() + " Move (" + Player1.getPlayerColor().ToString() + ")";
+                        for (int row = 0; row < CARDSIZE - 1; row++)
+                        {
+
+
+                            for (int col = 0; col < CARDSIZE; col++)
+                            {
+
+                                newButton[row, col].BackColor = Color.DarkGray;
+                                newButton[row, col].Text = "0";
+
+
+                                if (row == 5)
+                                {
+                                    newButton[row, col].Enabled = true;
+                                    newButton[row, col].BackColor = Color.LightGray;
+                                }
+                                else
+                                {
+                                    newButton[row, col].Enabled = false;
+                                }
+                                newButton[row, col].Name = "btn" + row.ToString() + col.ToString();
+
+                                // Associates the same event handler with each of the buttons generated
+                                //newButton[row, col].Click += new EventHandler(Button_Click);
+                            }
+                        } // end for col
+                        counter = 0;
+
+                    }
+                    else if (dg == DialogResult.No)
+                    {
+                        this.Close();
+                    }
+                }
+                else if (currentPlayer == Player2.getPlayerID())
+                {
+                    MessageBox.Show(Player2.getPlayerName().ToString() + " (Player 2) Wins! Congrats!", "You are a Winner!");
+                    DialogResult dg = MessageBox.Show("Would you like to play again?", "Play again?", MessageBoxButtons.YesNo);
+                    if (dg == DialogResult.Yes)
+                    {
+                        board.resetBoard();
+                        buttonClickCounter = 0;
+                        currentPlayer = Player1.getPlayerID();
+                        lblCurrentPlayer.Text = "Player " + Player1.getPlayerID().ToString() + " Move (" + Player1.getPlayerColor().ToString() + ")";
+                        for (int row = 0; row < CARDSIZE - 1; row++)
+                        {
+
+
+                            for (int col = 0; col < CARDSIZE; col++)
+                            {
+
+                                newButton[row, col].BackColor = Color.DarkGray;
+                                newButton[row, col].Text = "0";
+
+
+                                if (row == 5)
+                                {
+                                    newButton[row, col].Enabled = true;
+                                    newButton[row, col].BackColor = Color.LightGray;
+                                }
+                                else
+                                {
+                                    newButton[row, col].Enabled = false;
+                                }
+                                newButton[row, col].Name = "btn" + row.ToString() + col.ToString();
+
+                                // Associates the same event handler with each of the buttons generated
+                                //newButton[row, col].Click += new EventHandler(Button_Click);
+                            }
+                        } // end for col
+
+                    }
+                    else if (dg == DialogResult.No)
+                    {
+                        this.Close();
+                    }
+                }
+            }
+            else if (currentPlayer == Player1.getPlayerID())
+            {
+                currentPlayer = Player2.getPlayerID();
+            }
+            else if (currentPlayer == Player2.getPlayerID())
+            {
+                currentPlayer = Player1.getPlayerID();
+            }
         }
     }
 }

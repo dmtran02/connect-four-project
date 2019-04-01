@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmConnectFour));
             this.lblWelcome = new System.Windows.Forms.Label();
             this.lblPlayer1Name = new System.Windows.Forms.Label();
             this.txtPlayer1Name = new System.Windows.Forms.TextBox();
@@ -38,6 +39,8 @@
             this.lblPlayer2Name = new System.Windows.Forms.Label();
             this.txtPlayer2Name = new System.Windows.Forms.TextBox();
             this.lblCurrentPlayer = new System.Windows.Forms.Label();
+            this.axWindowsMediaPlayer1 = new AxWMPLib.AxWindowsMediaPlayer();
+            ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).BeginInit();
             this.SuspendLayout();
             // 
             // lblWelcome
@@ -63,7 +66,7 @@
             // txtPlayer1Name
             // 
             this.txtPlayer1Name.Location = new System.Drawing.Point(130, 29);
-            this.txtPlayer1Name.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtPlayer1Name.Margin = new System.Windows.Forms.Padding(2);
             this.txtPlayer1Name.Name = "txtPlayer1Name";
             this.txtPlayer1Name.Size = new System.Drawing.Size(121, 20);
             this.txtPlayer1Name.TabIndex = 1;
@@ -81,7 +84,7 @@
             // btnYes
             // 
             this.btnYes.Location = new System.Drawing.Point(195, 62);
-            this.btnYes.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnYes.Margin = new System.Windows.Forms.Padding(2);
             this.btnYes.Name = "btnYes";
             this.btnYes.Size = new System.Drawing.Size(87, 28);
             this.btnYes.TabIndex = 3;
@@ -92,7 +95,7 @@
             // btnExit
             // 
             this.btnExit.Location = new System.Drawing.Point(305, 62);
-            this.btnExit.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnExit.Margin = new System.Windows.Forms.Padding(2);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(87, 28);
             this.btnExit.TabIndex = 4;
@@ -103,7 +106,7 @@
             // pnlCard
             // 
             this.pnlCard.Location = new System.Drawing.Point(62, 106);
-            this.pnlCard.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pnlCard.Margin = new System.Windows.Forms.Padding(2);
             this.pnlCard.Name = "pnlCard";
             this.pnlCard.Size = new System.Drawing.Size(765, 894);
             this.pnlCard.TabIndex = 9;
@@ -121,7 +124,7 @@
             // txtPlayer2Name
             // 
             this.txtPlayer2Name.Location = new System.Drawing.Point(328, 28);
-            this.txtPlayer2Name.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtPlayer2Name.Margin = new System.Windows.Forms.Padding(2);
             this.txtPlayer2Name.Name = "txtPlayer2Name";
             this.txtPlayer2Name.Size = new System.Drawing.Size(121, 20);
             this.txtPlayer2Name.TabIndex = 2;
@@ -137,12 +140,23 @@
             this.lblCurrentPlayer.Text = "Current Player";
             this.lblCurrentPlayer.Visible = false;
             // 
+            // axWindowsMediaPlayer1
+            // 
+            this.axWindowsMediaPlayer1.Enabled = true;
+            this.axWindowsMediaPlayer1.Location = new System.Drawing.Point(656, 6);
+            this.axWindowsMediaPlayer1.Name = "axWindowsMediaPlayer1";
+            this.axWindowsMediaPlayer1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axWindowsMediaPlayer1.OcxState")));
+            this.axWindowsMediaPlayer1.Size = new System.Drawing.Size(193, 46);
+            this.axWindowsMediaPlayer1.TabIndex = 13;
+            this.axWindowsMediaPlayer1.Visible = false;
+            // 
             // frmConnectFour
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(904, 972);
+            this.Controls.Add(this.axWindowsMediaPlayer1);
             this.Controls.Add(this.lblCurrentPlayer);
             this.Controls.Add(this.txtPlayer2Name);
             this.Controls.Add(this.lblPlayer2Name);
@@ -153,9 +167,10 @@
             this.Controls.Add(this.txtPlayer1Name);
             this.Controls.Add(this.lblPlayer1Name);
             this.Controls.Add(this.lblWelcome);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "frmConnectFour";
             this.Text = "Connect Four";
+            ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -173,6 +188,7 @@
         private System.Windows.Forms.Label lblPlayer2Name;
         private System.Windows.Forms.TextBox txtPlayer2Name;
         private System.Windows.Forms.Label lblCurrentPlayer;
+        private AxWMPLib.AxWindowsMediaPlayer axWindowsMediaPlayer1;
     }
 }
 
